@@ -21,6 +21,7 @@ class ProviderListView(ListView):
 def contact(request):
 	return render(request, 'localservices/contact.html')
 
+@login_required
 def createBooking(request, pk):
 	object = get_object_or_404(ServiceProvider, pk=pk)
 	if request.method == "POST":
