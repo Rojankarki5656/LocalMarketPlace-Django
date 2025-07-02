@@ -1,0 +1,94 @@
+{% extends 'localservices/base.html' %}
+{% block content %}
+    <!-- Page Header -->
+    <section class="bg-primary text-white py-4">
+        <div class="container">
+            <h1 class="display-5 fw-bold">Browse Services</h1>
+            <p class="lead">Find the perfect professional for your needs</p>
+        </div>
+    </section>
+
+    <!-- Filters and Search -->
+    <section class="py-4 bg-light">
+        <div class="container">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <select class="form-select">
+                        <option selected>All Categories</option>
+                        <option value="plumbing">Plumbing</option>
+                        <option value="electrical">Electrical</option>
+                        <option value="cleaning">Cleaning</option>
+                        <option value="handyman">Handyman</option>
+                        <option value="landscaping">Landscaping</option>
+                        <option value="painting">Painting</option>
+                        <option value="automotive">Automotive</option>
+                        <option value="tech">Tech Support</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="Enter your location">
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-primary w-100">
+                        <i class="bi bi-search me-2"></i>Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Service Provider 1 -->
+                {% for provider in providers %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <img src="{{provider.user.profile.image.url}}" class="card-img-top">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title mb-0">{{ provider.user.username }}</h5>
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-star-fill"></i> 4.9
+                                </span>
+                            </div>
+                            <p class="text-muted mb-2">
+                                <i class="bi bi-wrench-adjustable me-1"></i> {{ provider.category }}
+                            </p>
+                            <p class="text-muted mb-2">
+                                <i class="bi bi-geo-alt me-1"></i> $ {{provider.hourly_rate}}
+                            </p>
+                            <p class="card-text">Professional plumbing services with 15+ years experience. Available for emergency calls.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-primary fw-bold">$75/hour</span>
+                                <a href="{% url 'service-detail' provider.id %}" class="btn btn-primary">View Profile</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            <!-- Pagination -->
+            <nav aria-label="Services pagination" class="mt-5">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+{% endblock content %}

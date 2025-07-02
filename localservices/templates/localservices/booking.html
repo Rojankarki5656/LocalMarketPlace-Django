@@ -1,0 +1,167 @@
+{% extends 'localservices/base.html' %}
+{% block content %}
+
+    <!-- Page Header -->
+    <section class="bg-primary text-white py-4">
+        <div class="container">
+            <h1 class="display-5 fw-bold">Book a Service</h1>
+            <p class="lead">Schedule your appointment with a professional</p>
+        </div>
+    </section>
+
+    <!-- Booking Form -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <!-- Service Provider Info -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body p-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <img src="{{ object.user.profile.image.url }}" alt="John Smith" class="img-fluid rounded-circle">
+                                </div>
+                                <div class="col-md-10">
+                                    <h5 class="fw-bold mb-1">{{ object.user.username }}</h5>
+                                    <p class="text-muted mb-1">
+                                        <i class="bi bi-wrench-adjustable me-1"></i>{{object.category}}
+                                    </p>
+                                    <div class="d-flex align-items-center">
+                                        <span class="badge bg-warning text-dark me-2">
+                                            <i class="bi bi-star-fill"></i> 4.9
+                                        </span>
+                                        <span class="text-primary fw-bold">{{object.hourly_rate}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Booking Form -->
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h4 class="fw-bold mb-4">Booking Details</h4>
+                            
+                            <form method="POST">
+                                {% csrf_token %}s
+                                <!-- Date and Time -->
+                                <input type="hidden" name="customer" value="{{ user.id }}">
+                                <input type="hidden" name="provider" value="{{ object.user.id }}">
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-6">
+                                        <label for="preferredDate" class="form-label">Preferred Date:</label>
+                                        <input type="date" class="form-control" id="preferred_date" name="preferred_date" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="preferredTime" class="form-label">Preferred Time: </label>
+                                        <select class="form-select" id="preferred_time" name="preferred_time" required>
+                                            <option value="">Select Time</option>
+                                            <option value="morning">Morning (8:00 AM - 12:00 PM)</option>
+                                            <option value="afternoon">Afternoon (12:00 PM - 5:00 PM)</option>
+                                            <option value="evening">Evening (5:00 PM - 8:00 PM)</option>
+                                            <option value="flexible">Flexible</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Urgency -->
+                                <div class="mb-4">
+                                    <label class="form-label">Urgency Level</label>
+                                    <div class="row g-2">
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="urgency_level" id="routine" value="routine" checked>
+                                                <label class="form-check-label" for="routine">
+                                                    <span class="badge bg-success me-2">Routine</span>
+                                                    <small class="text-muted">Within a week</small>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="urgency_level" id="urgent" value="urgent">
+                                                <label class="form-check-label" for="urgent">
+                                                    <span class="badge bg-warning text-dark me-2">Urgent</span>
+                                                    <small class="text-muted">Within 24 hours</small>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="urgency_level" id="emergency" value="emergency">
+                                                <label class="form-check-label" for="emergency">
+                                                    <span class="badge bg-danger me-2">Emergency</span>
+                                                    <small class="text-muted">ASAP</small>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Additional Notes -->
+                                <div class="mb-4">
+                                    <label for="notes" class="form-label">Additional Notes</label>
+                                    <textarea name="additional_notes" class="form-control" id="notes" rows="3" placeholder="Any additional information or special requirements..."></textarea>
+                                </div>
+
+                                <!-- Terms and Conditions -->
+                                <div class="mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="terms" required>
+                                        <label class="form-check-label" for="terms">
+                                            I agree to the <a href="#" class="text-primary">Terms of Service</a> and <a href="#" class="text-primary">Privacy Policy</a> *
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Submit Buttons -->
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <a href="{% url 'services' %}" class="btn btn-outline-secondary me-md-2">Back to Profile</a>
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="bi bi-calendar-check me-2"></i>Submit Booking Request
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Booking Process Info -->
+                    <div class="card border-0 shadow-sm mt-4">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-3">What Happens Next?</h5>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <div class="text-center">
+                                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 50px; height: 50px;">
+                                            <span class="fw-bold">1</span>
+                                        </div>
+                                        <h6 class="fw-bold">Request Sent</h6>
+                                        <small class="text-muted">Your booking request is sent to the service provider</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-center">
+                                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 50px; height: 50px;">
+                                            <span class="fw-bold">2</span>
+                                        </div>
+                                        <h6 class="fw-bold">Confirmation</h6>
+                                        <small class="text-muted">Provider reviews and confirms your appointment</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-center">
+                                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 50px; height: 50px;">
+                                            <span class="fw-bold">3</span>
+                                        </div>
+                                        <h6 class="fw-bold">Service Day</h6>
+                                        <small class="text-muted">Professional arrives and completes the work</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

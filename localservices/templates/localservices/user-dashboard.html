@@ -1,0 +1,236 @@
+    {% extends 'localservices/base.html' %}
+    {% block content %}
+
+        <!-- Dashboard Header -->
+        <section class="bg-primary text-white py-4">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h1 class="display-6 fw-bold mb-2">Welcome back, {{ user.username }}!</h1>
+                        <p class="lead mb-0">Manage your bookings and find new services</p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <a href="{% url 'services' %}" class="btn btn-light btn-lg">
+                            <i class="bi bi-plus-circle me-2"></i>Book New Service
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Content -->
+        <section class="py-5">
+            <div class="container">
+                <div class="row g-4">
+                    <!-- Quick Stats -->
+                    <div class="col-12">
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-3">
+                                <div class="card border-0 shadow-sm text-center">
+                                    <div class="card-body">
+                                        <i class="bi bi-calendar-check display-4 text-primary mb-2"></i>
+                                        <h3 class="fw-bold">{{ pending_bookings }}</h3>
+                                        <p class="text-muted mb-0">Active Bookings</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card border-0 shadow-sm text-center">
+                                    <div class="card-body">
+                                        <i class="bi bi-check-circle display-4 text-success mb-2"></i>
+                                        <h3 class="fw-bold">{{ completed_bookings }}</h3>
+                                        <p class="text-muted mb-0">Completed Services</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card border-0 shadow-sm text-center">
+                                    <div class="card-body">
+                                        <i class="bi bi-heart display-4 text-danger mb-2"></i>
+                                        <h3 class="fw-bold">5</h3>
+                                        <p class="text-muted mb-0">Favorite Providers</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card border-0 shadow-sm text-center">
+                                    <div class="card-body">
+                                        <i class="bi bi-star display-4 text-warning mb-2"></i>
+                                        <h3 class="fw-bold">4.8</h3>
+                                        <p class="text-muted mb-0">Avg. Rating Given</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Upcoming Bookings -->
+                    <div class="col-lg-8">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-white">
+                                <h5 class="fw-bold mb-0">
+                                    <i class="bi bi-calendar-event me-2"></i>Upcoming Bookings
+                                </h5>
+                            </div>
+                            {% for booking in bookings %}
+                            <div class="card-body p-0">
+                                <!-- Booking 1 -->
+                                <div class="border-bottom p-4">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2">
+                                            <img src="{{ booking.provider.profile.image.url }}" alt="John Smith" class="img-fluid rounded-circle">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6 class="fw-bold mb-1">{{ booking.provider.username }}</h6>
+                                            <p class="text-muted mb-1">{{ booking.provider.category }}</p>
+                                            <div class="d-flex align-items-center">
+                                                <i class="bi bi-calendar me-1 text-primary"></i>
+                                                <small>{{ booking.preferred_time }}</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2"> 
+                                        <span class="badge 
+                                            {% if booking.status == 'pending' %}bg-warning text-dark
+                                            {% elif booking.status == 'confirmed' %}bg-success
+                                            {% elif booking.status == 'cancelled' %}bg-danger
+                                            {% else %}bg-secondary{% endif %}">
+                                            {{ booking.status|title }}
+                                        </span>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="dropdown">
+                                                <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                                    Actions
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="{% url 'booking-details' booking.id %}"><i class="bi bi-eye me-2"></i>View Details</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="bi bi-chat-dots me-2"></i>Message</a></li>
+                                                    <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-x-circle me-2"></i>Cancel</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Profile & Quick Actions -->
+                    <div class="col-lg-4">
+                        <!-- Profile Card -->
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-body text-center">
+                                <img src="{{ user.profile.image.url }}" alt="Profile" class="rounded-circle mb-3">
+                                <h5 class="fw-bold">{{ user.first_name }} {{ user.last_name }}</h5>
+                                <p class="text-muted mb-3">Customer since {{ user.date_joined|date:"F Y" }}</p>
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <a class="btn btn-outline-primary btn-sm w-100" href="{% url 'profile' %}">Edit Profile</a>
+                                    </div>
+                                    <div class="col-6">
+                                        <button class="btn btn-outline-secondary btn-sm w-100">Settings</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-white">
+                                <h6 class="fw-bold mb-0">Quick Actions</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-grid gap-2">
+                                    <a href="services.html" class="btn btn-primary">
+                                        <i class="bi bi-plus-circle me-2"></i>Book New Service
+                                    </a>
+                                    <button class="btn btn-outline-primary">
+                                        <i class="bi bi-clock-history me-2"></i>View Booking History
+                                    </button>
+                                    <button class="btn btn-outline-success">
+                                        <i class="bi bi-heart me-2"></i>Favorite Providers
+                                    </button>
+                                    <button class="btn btn-outline-info">
+                                        <i class="bi bi-chat-dots me-2"></i>Messages
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-white">
+                                <h5 class="fw-bold mb-0">
+                                    <i class="bi bi-clock-history me-2"></i>Recent Activity
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0">
+                                                <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                                    <i class="bi bi-check"></i>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6 class="fw-bold mb-1">Service Completed</h6>
+                                                <p class="text-muted mb-1">Bathroom cleaning by Sarah Johnson</p>
+                                                <small class="text-muted">2 days ago</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0">
+                                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                                    <i class="bi bi-calendar"></i>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6 class="fw-bold mb-1">Booking Confirmed</h6>
+                                                <p class="text-muted mb-1">{{ userbooking }}</p>
+                                                <small class="text-muted">3 days ago</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0">
+                                                <div class="bg-warning text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                                    <i class="bi bi-star"></i>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6 class="fw-bold mb-1">Review Submitted</h6>
+                                                <p class="text-muted mb-1">5-star review for Lisa Chen</p>
+                                                <small class="text-muted">1 week ago</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0">
+                                                <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                                    <i class="bi bi-person-plus"></i>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6 class="fw-bold mb-1">Account Created</h6>
+                                                <p class="text-muted mb-1">Welcome to ServiceHub!</p>
+                                                <small class="text-muted">2 weeks ago</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    {% endblock content %}

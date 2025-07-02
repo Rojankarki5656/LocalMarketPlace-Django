@@ -1,0 +1,156 @@
+{% extends 'localservices/base.html' %}
+{% block content %}
+
+    <!-- Page Header -->
+    <section class="bg-primary text-white py-4">
+        <div class="container">
+            <h1 class="display-5 fw-bold">Booking Details</h1>
+            <p class="lead">View your appointment details</p>
+        </div>
+    </section>
+
+    <!-- Booking Details -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <!-- Service Provider Info -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body p-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <img src="{{ booking.provider.profile.image.url }}" alt="{{ booking.provider.username }}" class="img-fluid rounded-circle">
+                                </div>
+                                <div class="col-md-10">
+                                    <h5 class="fw-bold mb-1">{{ booking.provider.username }}</h5>
+                                    <p class="text-muted mb-1">
+                                        <i class="bi bi-wrench-adjustable me-1"></i>{{ booking.provider.category }}
+                                    </p>
+                                    <div class="d-flex align-items-center">
+                                        <span class="text-primary fw-bold">{{ booking.provider.hourly_rate }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Booking Information -->
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h4 class="fw-bold mb-4">Booking Information</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <p><strong>Booking ID:</strong> {{ booking.id }}</p>
+                                    <p><strong>Customer:</strong> {{ booking.customer.username }}</p>
+                                    <p><strong>Preferred Date:</strong> {{ booking.preferred_date|date:"F d, Y" }}</p>
+                                    <p><strong>Preferred Time:</strong> 
+                                        {% if booking.preferred_time == 'morning' %}
+                                            Morning (8:00 AM - 12:00 PM)
+                                        {% elif booking.preferred_time == 'afternoon' %}
+                                            Afternoon (12:00 PM - 5:00 PM)
+                                        {% elif booking.preferred_time == 'evening' %}
+                                            Evening (5:00 PM - 8:00 PM)
+                                        {% else %}
+                                            Flexible
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Urgency Level:</strong> 
+                                        {% if booking.urgency_level == 'routine' %}
+                                            <span class="badge bg-success">Routine</span>
+                                        {% elif booking.urgency_level == 'urgent' %}
+                                            <span class="badge bg-warning text-dark">Urgent</span>
+                                        {% elif booking.urgency_level == 'emergency' %}
+                                            <span class="badge bg-danger">Emergency</span>
+                                        {% endif %}
+                                    </p>
+                                    <p><strong>Status:</strong> 
+                                        <span class="badge 
+                                            {% if booking.status == 'pending' %}bg-warning text-dark
+                                            {% elif booking.status == 'confirmed' %}bg-success
+                                            {% elif booking.status == 'cancelled' %}bg-danger
+                                            {% else %}bg-secondary{% endif %}">
+                                            {{ booking.status|title }}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <p><strong>Additional Notes:</strong></p>
+                                <p class="text-muted">{{ booking.additional_notes|default:"No additional notes provided." }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        {% if user.role == 'customer' %}
+                            {% if booking.status == 'pending' %}
+                                <a href="{% url 'cancel-booking' booking.id %}" class="btn btn-outline-danger">
+                                    <i class="bi bi-x-circle me-2"></i>Cancel Booking
+                                </a>
+                            {% endif %}
+                         {% elif user.role == 'provider' %}
+                                <a href="{% url 'update-booking' booking.id %}" class="btn btn-outline-info">
+                                    <i class="bi me-2"></i>Update Booking
+                                </a>
+                        {% endif %}
+                        <a href="{% url 'services' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-2"></i>Back to Services
+                        </a>    
+                    </div>
+
+                    <!-- Booking Process Info -->
+                    <div class="card border-0 shadow-sm mt-4">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-3">Booking Status</h5>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <div class="text-center">
+                                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 50px; height: 50px;">
+                                            <span class="fw-bold">1</span>
+                                        </div>
+                                        <h6 class="fw-bold">Request Sent</h6>
+                                        <small class="text-muted">Your booking request was sent to the provider</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-center">
+                                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 50px; height: 50px;">
+                                            <span class="fw-bold">2</span>
+                                        </div>
+                                        <h6 class="fw-bold">Confirmation</h6>
+                                        <small class="text-muted">
+                                            {% if booking.status == 'confirmed' %}
+                                                Booking confirmed by provider
+                                            {% else %}
+                                                Awaiting provider confirmation
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-center">
+                                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 50px; height: 50px;">
+                                            <span class="fw-bold">3</span>
+                                        </div>
+                                        <h6 class="fw-bold">Service Day</h6>
+                                        <small class="text-muted">
+                                            {% if booking.status == 'completed' %}
+                                                Service completed
+                                            {% else %}
+                                                Professional will arrive on scheduled date
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}

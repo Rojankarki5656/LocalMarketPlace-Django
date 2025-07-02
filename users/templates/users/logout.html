@@ -1,0 +1,21 @@
+{% extends 'localservices/base.html' %}
+{% block content %}
+
+<section class="py-5">
+ <div class="card-body p-5">
+         <div class="text-center mb-4">
+             <h2 class="fw-bold mt-3">Are you sure want to log out?</h2>
+     
+         <form method="POST">
+             {% csrf_token %}
+             <div class="d-grid mb-3">
+                 <button type="submit" class="btn btn-primary btn-mid">Logout !</button>
+             </div>
+            <div class="d-grid mb-3">
+                 <button href="{% url 'dashboard' %}" class="btn btn-primary btn-mid">Cancel</button>
+             </div>
+             </form>
+        </div>
+    </div>
+</section>
+{% endblock content %}

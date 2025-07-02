@@ -1,0 +1,214 @@
+{% extends 'localservices/base.html' %}
+{% block content %}
+    <!-- Hero Section -->
+    <section class="hero-section bg-primary text-white py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">Find Local Service Professionals</h1>
+                    <p class="lead mb-4">Connect with trusted local professionals for all your home and business needs. From plumbing to cleaning, we've got you covered.</p>
+                    <div class="d-flex gap-3">
+                        <a href="{% url 'services' %}" class="btn btn-light btn-lg">Browse Services</a>
+                        <a href="{% url 'register' %}" class="btn btn-outline-light btn-lg">Join as Professional</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <img src="/placeholder.svg?height=400&width=500" alt="Service professionals" class="img-fluid rounded">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Categories -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Popular Service Categories</h2>
+                <p class="text-muted">Choose from our wide range of professional services</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 text-center border-0 shadow-sm category-card">
+                        <div class="card-body">
+                            <i class="bi bi-wrench-adjustable display-4 text-primary mb-3"></i>
+                            <h5 class="card-title">Plumbing</h5>
+                            <p class="card-text text-muted">Professional plumbing services for your home</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 text-center border-0 shadow-sm category-card">
+                        <div class="card-body">
+                            <i class="bi bi-lightning display-4 text-warning mb-3"></i>
+                            <h5 class="card-title">Electrical</h5>
+                            <p class="card-text text-muted">Licensed electricians for all electrical needs</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 text-center border-0 shadow-sm category-card">
+                        <div class="card-body">
+                            <i class="bi bi-brush display-4 text-success mb-3"></i>
+                            <h5 class="card-title">Cleaning</h5>
+                            <p class="card-text text-muted">Professional cleaning services</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 text-center border-0 shadow-sm category-card">
+                        <div class="card-body">
+                            <i class="bi bi-hammer display-4 text-danger mb-3"></i>
+                            <h5 class="card-title">Handyman</h5>
+                            <p class="card-text text-muted">General repairs and maintenance</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 text-center border-0 shadow-sm category-card">
+                        <div class="card-body">
+                            <i class="bi bi-scissors display-4 text-info mb-3"></i>
+                            <h5 class="card-title">Landscaping</h5>
+                            <p class="card-text text-muted">Garden and lawn care services</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 text-center border-0 shadow-sm category-card">
+                        <div class="card-body">
+                            <i class="bi bi-paint-bucket display-4 text-secondary mb-3"></i>
+                            <h5 class="card-title">Painting</h5>
+                            <p class="card-text text-muted">Interior and exterior painting</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 text-center border-0 shadow-sm category-card">
+                        <div class="card-body">
+                            <i class="bi bi-car-front display-4 text-dark mb-3"></i>
+                            <h5 class="card-title">Automotive</h5>
+                            <p class="card-text text-muted">Car repair and maintenance</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 text-center border-0 shadow-sm category-card">
+                        <div class="card-body">
+                            <i class="bi bi-laptop display-4 text-primary mb-3"></i>
+                            <h5 class="card-title">Tech Support</h5>
+                            <p class="card-text text-muted">Computer and device repair</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Professionals -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Featured Professionals</h2>
+                <p class="text-muted">Top-rated service providers in your area</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <img src="/placeholder.svg?height=200&width=300" class="card-img-top" alt="Professional">
+                        <div class="card-body">
+                            <h5 class="card-title">John Smith</h5>
+                            <p class="text-muted mb-2">
+                                <i class="bi bi-wrench-adjustable me-1"></i>Plumber
+                            </p>
+                            <div class="mb-2">
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-star-fill"></i> 4.9
+                                </span>
+                                <small class="text-muted ms-2">15+ years experience</small>
+                            </div>
+                            <p class="card-text">Professional plumbing services with 24/7 emergency support.</p>
+                            <a href="% url 'services' %" class="btn btn-primary">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <img src="/placeholder.svg?height=200&width=300" class="card-img-top" alt="Professional">
+                        <div class="card-body">
+                            <h5 class="card-title">Sarah Johnson</h5>
+                            <p class="text-muted mb-2">
+                                <i class="bi bi-brush me-1"></i>House Cleaner
+                            </p>
+                            <div class="mb-2">
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-star-fill"></i> 4.8
+                                </span>
+                                <small class="text-muted ms-2">8+ years experience</small>
+                            </div>
+                            <p class="card-text">Eco-friendly cleaning services for homes and offices.</p>
+                            <a href="service-detail.html" class="btn btn-primary">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <img src="/placeholder.svg?height=200&width=300" class="card-img-top" alt="Professional">
+                        <div class="card-body">
+                            <h5 class="card-title">Mike Davis</h5>
+                            <p class="text-muted mb-2">
+                                <i class="bi bi-lightning me-1"></i>Electrician
+                            </p>
+                            <div class="mb-2">
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-star-fill"></i> 4.7
+                                </span>
+                                <small class="text-muted ms-2">12+ years experience</small>
+                            </div>
+                            <p class="card-text">Licensed electrician specializing in residential and commercial work.</p>
+                            <a href="service-detail.html" class="btn btn-primary">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">How It Works</h2>
+                <p class="text-muted">Get your service booked in 3 simple steps</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4 text-center">
+                    <div class="mb-4">
+                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <i class="bi bi-search display-6"></i>
+                        </div>
+                    </div>
+                    <h4>1. Browse Services</h4>
+                    <p class="text-muted">Search and compare local service professionals in your area.</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="mb-4">
+                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <i class="bi bi-calendar-check display-6"></i>
+                        </div>
+                    </div>
+                    <h4>2. Book Appointment</h4>
+                    <p class="text-muted">Choose your preferred professional and schedule a convenient time.</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="mb-4">
+                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <i class="bi bi-check-circle display-6"></i>
+                        </div>
+                    </div>
+                    <h4>3. Get Service</h4>
+                    <p class="text-muted">Enjoy professional service and rate your experience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}
