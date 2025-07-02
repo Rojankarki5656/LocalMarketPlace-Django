@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'localservices.apps.LocalservicesConfig',
     'users.apps.UsersConfig',
     'provider.apps.ProviderConfig',
+    'usermessages.apps.UsermessagesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
